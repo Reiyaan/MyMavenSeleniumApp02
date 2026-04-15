@@ -1,29 +1,31 @@
 package com.example;
 
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WindowType;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
 import java.time.Duration;
 
 public class App 
 {
     public static void main(String[] args) throws InterruptedException
     {
-        // Firefox setup (stable)
         FirefoxOptions options = new FirefoxOptions();
+
+        
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
 
+        // 🔥 THIS LINE WAS MISSING
+        options.setBinary("/usr/bin/firefox");
+
         WebDriver driver = new FirefoxDriver(options);
 
-        // ---------- WEBSITE 1 ----------
         driver.get("https://www.saucedemo.com/");
         driver.manage().window().maximize();
 
@@ -36,11 +38,9 @@ public class App
         Thread.sleep(2000);
         driver.findElement(By.id("login-button")).click();
 
-        Thread.sleep(3000);
+        Thread.sleep(2000);
 
-        // ---------- WEBSITE 2 ----------
         driver.switchTo().newWindow(WindowType.TAB);
-
         driver.get("https://practicetestautomation.com/practice-test-login/");
 
         Thread.sleep(2000);
@@ -52,11 +52,9 @@ public class App
         Thread.sleep(2000);
         driver.findElement(By.id("submit")).click();
 
-        Thread.sleep(3000);
+        Thread.sleep(2000);
 
-        // ---------- WEBSITE 3 ----------
         driver.switchTo().newWindow(WindowType.TAB);
-
         driver.get("https://automationexercise.com/");
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -75,7 +73,7 @@ public class App
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", addToCart);
 
         wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//u[text()='View Cart']")
+            By.xpath("//u[text()='View Cart']")
         )).click();
 
         try {
